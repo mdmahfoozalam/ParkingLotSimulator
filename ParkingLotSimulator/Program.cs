@@ -10,13 +10,13 @@ internal class Program
         Console.WriteLine("Provide the number of slots to initialize parking");
 
         Console.WriteLine("Enter number of 2 wheeler slots");
-        int m = Convert.ToInt32(Console.ReadLine());
+        int twoWheelersSlotsCount = Convert.ToInt32(Console.ReadLine());
 
         Console.WriteLine("Enter number of 4 wheeler slots");
-        int n = Convert.ToInt32(Console.ReadLine());
+        int fourWheelerSlotsCount = Convert.ToInt32(Console.ReadLine());
 
         Console.WriteLine("Enter number of heavy vehicle slots");
-        int o = Convert.ToInt32(Console.ReadLine());
+        int heavyVehicleSlotsCount = Convert.ToInt32(Console.ReadLine());
 
         Console.WriteLine("Your parking lot initialization is done.");
 
@@ -25,9 +25,9 @@ internal class Program
         parkingLot.Tickets = new List<Ticket>();
 
 
-        var twoWheelerSlots = CreateSlots(m);
-        var fourWheelerSlots = CreateSlots(n);
-        var heavyVehicleSlots = CreateSlots(o);
+        var twoWheelerSlots = CreateSlots(twoWheelersSlotsCount);
+        var fourWheelerSlots = CreateSlots(fourWheelerSlotsCount);
+        var heavyVehicleSlots = CreateSlots(heavyVehicleSlotsCount);
 
 
         parkingLot.Slots.Add(VehicleType.TwoWheeler, twoWheelerSlots);
@@ -58,7 +58,7 @@ internal class Program
                     
                     if (z != null)
                     {
-                        z.VehicleDetail.Number = number;
+                        z.VehicleDetail = new Vehicle { Number = number, Type = type};
                         z.IsParked = true;
                         Ticket recentTicket = new Ticket()
                         {
@@ -90,7 +90,7 @@ internal class Program
                 case 3:
                     Console.WriteLine("Enter vehicle number to unpark");
                     string vehicleNumber = Console.ReadLine();
-                    Slot y = parkingLot.Slots[type].Where(f=> f.VehicleDetail.Number == vehicleNumber).FirstOrDefault();
+                    Slot y = parkingLot.Slots[type].Where(f=> f.VehicleDetail?.Number == vehicleNumber)?.FirstOrDefault();
                     if (y != null)
                     {
                         y.IsParked = false;
@@ -123,8 +123,7 @@ internal class Program
             slots.Add(new Slot()
             {
                 Number = i + 1,
-                IsParked = false,
-                VehicleDetail = new Vehicle()
+                IsParked = false
             });
         }
         return slots;

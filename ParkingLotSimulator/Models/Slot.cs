@@ -10,7 +10,6 @@ namespace ParkingLotSimulator.Models
     {
         public int Number { get; set; } 
 
-        //public VehicleEnum VehicleType { get; set; }
         public Vehicle? VehicleDetail { get; set; }
 
         public bool IsParked { get; set; }
